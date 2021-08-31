@@ -5,11 +5,12 @@ config-version: 2
 
 macro-paths: ["udfs"]
 
-target-path: "target"  # directory which will store compiled SQL files
-clean-targets:         # directories to be removed by `dbt clean`
-    - "target"
-    - "dbt_modules"
-
+# All UDF macros will be executed as such on the on-run-start config
 on-run-start:
   - "{{ salesforce_formula_udfs.cast_as_string() }}"
   - "{{ salesforce_formula_udfs.cast_as_integer() }}"
+
+target-path: "target"
+clean-targets:
+    - "target"
+    - "dbt_modules"
