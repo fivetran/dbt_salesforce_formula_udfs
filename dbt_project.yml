@@ -1,0 +1,15 @@
+
+name: 'salesforce_formula_udfs'
+version: '0.1.0'
+config-version: 2
+
+macro-paths: ["udfs"]
+
+target-path: "target"  # directory which will store compiled SQL files
+clean-targets:         # directories to be removed by `dbt clean`
+    - "target"
+    - "dbt_modules"
+
+on-run-start:
+  - "{{ salesforce_formula_udfs.cast_as_string() }}"
+  - "{{ salesforce_formula_udfs.cast_as_integer() }}"
