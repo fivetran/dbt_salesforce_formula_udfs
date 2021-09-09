@@ -1,5 +1,8 @@
 {% macro cast_as_string() %}
-{% if target.type == 'snowflake' %}
+    {{ return(adapter.dispatch('cast_as_string', 'salesforce_formula_udfs')()) }}
+{% endmacro %}
+
+{% macro default__cast_as_string() %}
     create or replace function cast_as_string(field varchar)
     returns varchar
     as
@@ -7,12 +10,12 @@
         cast(field as varchar)
     $$
     ;
-{% elif target.type == 'bigquery' %}
+{% endmacro %}
+
+{% macro bigquery__cast_as_string() %}
     {{ log('bigquery udf here',info=true) }}
+{% endmacro %}
 
-{% elif target.type == 'redshift' %}
+{% macro redshift__cast_as_string() %}
     {{ log('redshift udf here',info=true) }}
-
-{% endif %}
-
 {% endmacro %}
